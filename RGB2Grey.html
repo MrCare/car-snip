@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGB2Grey</title>
+</head>
+<body>
+    <input id="inputImg" type="file" placeholder="请选择图片" accept="image/*"/>
+    <canvas id="cvs" style="width: 400px; height: 300px;"></canvas>
+</body>
+<script>
+    let eleInput = document.querySelector("#inputImg");
+    eleInput.addEventListener("change", readFile, false)
+    function readFile(){
+        let file = this.files[0];
+        if(!/image\/\w+/.test(file.type)){
+            alert("请确保文件为图像类型");
+            return false;
+        }
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            drawToCanvas(this.result);
+        }
+    }
+
+    function drawToCanvas(imgData){
+        let cvs = document.querySelector('#cvs');
+        let ctx = cvs.getContext('2d');
+        let img = new Image();
+        img.src = imgData;
+        img.onload = function(){
+            ctx.drawImage(img, 0, 0, 400, 300);
+            let pixels = ctx.getImageData(0, 0, 400, 300);
+            let pixeldata = pixels.data;
+            for (let i = 0, len = pixeldata.length; i < len; i += 4){
+                let gray = parseInt( pixels.data[i] * 0.3 + pixels.data[i+1] * 0.59 + pixels.data[i+2] * 0.11);             
+                pixels.data[i] = gray; 
+                pixels.data[i+1] = gray; 
+                pixels.data[i+2] = gray; 
+            }
+            ctx.putImageData(pixels, 0, 0);
+        }
+    }
+</script>
+</html>
