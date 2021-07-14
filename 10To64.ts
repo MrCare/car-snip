@@ -10,6 +10,9 @@ class Util {
     public decode64to10 = (ori: string) => {
         try {
             let [partA, partB] = ori.split('.');
+            if (partA.includes("-")){
+                return "-" + this.int64to10(partA) + this.decimal64to10(partB)
+            }
             return this.int64to10(partA) + this.decimal64to10(partB)
         }
         catch(e){
