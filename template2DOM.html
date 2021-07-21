@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>template2DOM</title>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+<script>
+    ////////// 工具函数 //////////
+    // vnode类
+    class Vnode {
+        constructor(tag, attr, children, parent, childrenTemplate) {
+            this.tag = tag;
+            this.attr = attr;
+            this.children = children;
+            this.parent = parent;
+            this.childrenTemplate = childrenTemplate;
+            this.uuid = this.uuid();
+        }
+        /**
+         * 生成唯一id
+        */
+        uuid(){
+            return (
+                Math.random() * 10000000000 +
+                Math.random() * 100000 +
+                Date.now()
+            ).toString(36);
+        }
+    }
+    
+    // render函数
+    let render = (tmpl, dataObj) => {
+        
+    }
+
+    ////////// 主函数 //////////
+    let tmpl = 
+    `<div class="newslist">
+        <div class="img" v-if="info.showImage"><img src="{{image}}"/></div>
+        <div class="date" v-if="info.showDate">{{info.name}}</div>
+        <div class="img">{{info.name}}</div>
+    </div>`;
+    
+    render(tmpl, {
+        image: "https://www.hitwh.edu.cn/_upload/column/0a/44/2628/picture.png", 
+        info: {showImage: true, showDate:false, name: "aaa"}
+    })
+
+
+</script>
+</html>
