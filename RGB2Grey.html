@@ -7,12 +7,23 @@
     <title>RGB2Grey</title>
 </head>
 <body>
-    <input id="inputImg" type="file" placeholder="请选择图片" accept="image/*"/>
+    <input id="inputImg" type="file" accept="image/*"/>
+    <button id="button">下载</button>
     <canvas id="cvs" style="width: 400px; height: 300px;"></canvas>
 </body>
 <script>
     let eleInput = document.querySelector("#inputImg");
     eleInput.addEventListener("change", readFile, false)
+    // let eleButton = document.querySelector("#button");
+    // eleButton.onClick = function(){
+
+    //     var oA = document.createElement("a");
+    //     oA.download = '';// 设置下载的文件名，默认是'下载'
+    //     oA.href = url
+    //     document.body.appendChild(oA);
+    //     oA.click();
+    //     oA.remove(); // 下载之后把创建的元素删除
+    // }
     function readFile(){
         let file = this.files[0];
         if(!/image\/\w+/.test(file.type)){
@@ -35,6 +46,7 @@
             ctx.drawImage(img, 0, 0, 400, 300);
             let pixels = ctx.getImageData(0, 0, 400, 300);
             let pixeldata = pixels.data;
+            debugger
             for (let i = 0, len = pixeldata.length; i < len; i += 4){
                 let gray = parseInt( pixels.data[i] * 0.3 + pixels.data[i+1] * 0.59 + pixels.data[i+2] * 0.11);             
                 pixels.data[i] = gray; 
